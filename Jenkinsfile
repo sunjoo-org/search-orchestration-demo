@@ -30,7 +30,7 @@ pipeline {
                          */
                 echo "post: success"
                 if(env.CHANGE_ID) {
-                /*
+                    /*
                     pullRequest.comment("Post Section")
                     pullRequest.merge(commitTitle: 'Merge from test action', commitMessage: 'Merge Test', mergeMethod: 'squash')
                     */
