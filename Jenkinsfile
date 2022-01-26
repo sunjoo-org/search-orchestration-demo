@@ -14,7 +14,7 @@ pipeline {
                         echo pullRequest.body
                         echo pullRequest.state
                         echo pullRequest.labels[0]
-                        //pullRequest.comment("Ttes Commenv " + env.JENKINS_URL)
+                        pullRequest.comment("Ttes Commenv " + env.BUILD_URL)
                     }
                 }
             }
@@ -31,9 +31,10 @@ pipeline {
                 echo "post: success"
                 if(env.CHANGE_ID) {
                     /*
-                    pullRequest.comment("Post Section")
-                    pullRequest.merge(commitTitle: 'Merge from test action', commitMessage: 'Merge Test', mergeMethod: 'squash')
+                        pullRequest.merge(commitTitle: 'Merge from test action', commitMessage: 'Merge Test', mergeMethod: 'squash')
                     */
+                    pullRequest.comment("Post Section")
+                    echo pullRequest.review
                     for (review in pullRequest.reviews) {
                         echo "${review.user} has a review in ${review.state} state for Pull Request. Review body: ${review.body}"
                     }
