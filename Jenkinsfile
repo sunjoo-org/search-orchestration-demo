@@ -15,6 +15,7 @@ pipeline {
                         echo pullRequest.state
                         echo pullRequest.labels[0]
                         pullRequest.comment("Ttes Commenv " + env.BUILD_URL)
+                        //pullRequest.comment("start build from Pipeline")
                     }
                 }
             }
@@ -23,18 +24,19 @@ pipeline {
     post {
         success {
             script {
-            /*
-                    pullRequest.createStatus(status: 'error',
-                         description: 'Failed',
-                         targetUrl: "${env.BUILD_URL}")
-                         */
+                pullRequest.createStatus(status: 'success',
+                                            description: 'Checkekd',
+                                            targetUrl: "${env.BUILD_URL}")
+                pullRequest.createStatus(status: 'success',
+                                            context: 'static analysis',
+                                            description: 'Checkekd',
+                                            targetUrl: "${env.BUILD_URL}")
                 echo "post: success"
                 if(env.CHANGE_ID) {
                     /*
                         pullRequest.merge(commitTitle: 'Merge from test action', commitMessage: 'Merge Test', mergeMethod: 'squash')
                     */
                     pullRequest.comment("Post Section")
-                    echo pullRequest.review
                     for (review in pullRequest.reviews) {
                         echo "${review.user} has a review in ${review.state} state for Pull Request. Review body: ${review.body}"
                     }
