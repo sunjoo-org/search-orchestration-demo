@@ -17,6 +17,11 @@ pipeline {
                         pullRequest.comment("Ttes Commenv " + env.BUILD_URL)
                         //pullRequest.comment("start build from Pipeline")
                     }
+                    withCredentials([usernamePassword(credentialsId: 'github-sunjoo-park', passwordVariable: 'GITHUB_PASSWORD', usernameVariable: 'GITHUB_USER')]) {
+                        //echo "User: ${GITHUB_USER} , Password: ${GITHUB_PASSWORD}"
+                        def message = "comment by Jenkinspipeline"
+                        sh 'curl -u ${GITHUB_USER}:${GITHUB_PASSWORD} -X POST -d \'{"body": "' + message + '"}\' -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/sunjoo-org/search-orchestration-demo/issues/${CHANGE_ID}/comments'
+                    }
                 }
             }
         }
